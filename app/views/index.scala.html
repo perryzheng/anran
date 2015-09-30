@@ -1,8 +1,21 @@
-@(message: String)
+@(piles: List[Int], moveForm: Form[Move])
 
 @main("Anran Game") {
-  @if(message != null){
-    @message
-  }
-  hello world
+  <h2>Anran Game</h2>
+
+  <h3>Move History</h3>
+  <ul id="history"></ul>
+
+  <h3>Piles</h3>
+  <div class="piles">
+    <div>
+      @piles.map { pile =>
+        <span class="pile">@pile</span>
+      }
+    </div>
+  </div>
+
+  <div class="moveForm">
+    @move_form(moveForm)
+  </div>
 }

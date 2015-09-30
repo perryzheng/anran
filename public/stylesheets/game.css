@@ -1,0 +1,20 @@
+div.body {
+  width: 800px;
+  margin: 20px auto;
+  background-color: #D0E7EF;
+}
+
+.body > .container {
+  width: 760px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.piles {
+  margin: 20px auto;
+  width: 100px;
+}
+
+.pile {
+  margin-right: 20px;
+}
