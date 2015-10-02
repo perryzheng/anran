@@ -1,13 +1,12 @@
 package controllers
 
-import models.{Game, Move}
-import play.api._
+import models.Move
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.libs.json.Json
 
-object GameController extends Controller {
+object GameController extends Controller with Secured {
   val moveForm = Form(
     mapping(
       "pileIndex" -> number,
@@ -15,16 +14,29 @@ object GameController extends Controller {
     )(Move.apply)(Move.unapply)
   )
 
-  def index = Action {
-    val game = new Game(1L, 2L)
-    val piles = game.board.piles.toList
-    Ok(views.html.index(piles, moveForm))
+  def index = withPlayerAndRoom { (player, room) => implicit request =>
+    Ok(views.html.index(room.game.getPiles.toList, moveForm))
   }
 
-  def makeMove = Action { implicit request =>
-    val move = moveForm.bindFromRequest.get
-    Move.add(move.pileIndex, move.amountTaken)
-    Redirect(routes.GameController.index())
+  def makeMove = withPlayerAndRoom { (player, room) => implicit request =>
+    moveForm.bindFromRequest.fold(
+      errors => BadRequest,
+      move => {
+        Move.add(move.pileIndex, move.amountTaken)
+        try {
+          val actualTaken = room.game.makeMove(move.pileIndex - 1, move.amountTaken)
+          val json = Map(
+            "piles" -> room.game.getPiles.toList.mkString(","),
+            "pileIndex" -> move.pileIndex.toString,
+            "actualTaken" -> actualTaken.toString,
+            "whichPlayer" -> player.name
+          )
+          Ok(Json.toJson(json))
+        } catch { case e: Exception =>
+          BadRequest(Json.toJson("invalid move"))
+        }
+      }
+    )
   }
 
   def getMoves = Action {
