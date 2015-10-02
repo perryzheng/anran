@@ -6,18 +6,16 @@ import scala.collection.mutable.ListBuffer
  * Created by pzheng on 9/29/15.
  */
 class Board {
-  val piles = createPiles
-
-  def createPiles = ListBuffer(3, 4, 5)
+  val piles = ListBuffer(3, 4, 5)
 
   def makeMove(pileIndex: Int, amountTaken: Int): Int = {
     def isInvalidMove(pileIndex: Int, amountTaken: Int): Boolean =
       pileIndex >= piles.size || piles(pileIndex) == 0 || amountTaken <= 0
 
     if (isInvalidMove(pileIndex, amountTaken))
-      throw new InvalidMoveException(s"Not a valid move")
+      throw new InvalidMoveException("Not a valid move")
 
-    if (amountTaken <= pileIndex) {
+    if (amountTaken <= piles(pileIndex)) {
       piles(pileIndex) -= amountTaken
       amountTaken
     } else {

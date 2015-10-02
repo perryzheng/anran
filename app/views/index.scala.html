@@ -3,19 +3,13 @@
 @main("Anran Game") {
   <h2>Anran Game</h2>
 
-  <h3>Move History</h3>
-  <ul id="history"></ul>
+  <form action="@routes.RoomsController.join" method="post" class="joinForm">
+    <input type="text" name="name" placeholder="Your name" />
+    <button type="submit">Join</button>
+  </form>
 
-  <h3>Piles</h3>
-  <div class="piles">
-    <div>
-      @piles.map { pile =>
-        <span class="pile">@pile</span>
-      }
-    </div>
-  </div>
-
-  <div class="moveForm">
-    @move_form(moveForm)
+  <div id="status"></div>
+  <div class="gameArea">
+    @game_area(piles, moveForm)
   </div>
 }

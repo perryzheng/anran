@@ -1,0 +1,15 @@
+@(piles: List[Int], moveForm: Form[Move])
+
+<h3>Move History</h3>
+<ul id="history"></ul>
+
+<h3>Piles</h3>
+<div class="piles">
+  @piles.map { pile =>
+    <span class="pile">@pile</span>
+  }
+</div>
+
+<div class="moveForm">
+  @move_form(moveForm)
+</div>

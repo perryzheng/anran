@@ -1,7 +1,8 @@
 @(moveForm: Form[Move])
 
-<form action="@routes.GameController.makeMove" method="post">
-    <input type="text" name="pileIndex" placeholder="Pile index" />
-    <input type="text" name="numBeans" placeholder="Number of beans" />
-    <button type="submit">Submit</button>
+<form action="@routes.GameController.makeMove" class="makeMove">
+  <input type="text" name="pileIndex" placeholder="Pile index" />
+  <input type="text" name="numBeans" placeholder="Number of beans" />
+  <button type="submit">Make move</button>
 </form>
+<div class="moveError"></div>

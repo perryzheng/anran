@@ -11,10 +11,7 @@ case class Move(pileIndex: Int, amountTaken: Int)
 object Move {
   implicit val moveFormat = Json.format[Move]
 
-  var moves = List(
-    Move(1, 3),
-    Move(4, 6)
-  )
+  var moves = List[Move]()
 
   def add(pileIndex: Int, amountTaken: Int) =
     moves = moves :+ Move(pileIndex, amountTaken)

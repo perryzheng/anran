@@ -4,8 +4,17 @@
 
 # Home page
 GET         /                    controllers.GameController.index
+
+# Login
+GET         /login               controllers.AuthorizationController.login
+
+# Moves
 POST        /makeMove            controllers.GameController.makeMove
 GET         /moves               controllers.GameController.getMoves
+
+# Rooms
+POST        /rooms/join          controllers.RoomsController.join
+GET         /getRoom             controllers.RoomsController.getRoom
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
